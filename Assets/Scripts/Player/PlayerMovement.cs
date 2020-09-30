@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Unity.Mathematics;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -26,13 +27,9 @@ public class PlayerMovement : MonoBehaviour
     public bool wallJumped;
     public bool wallSlide;
     public bool isDashing;
-    
-    [Space]
 
-    private bool groundTouch;
-    private bool hasDashed;
-
-    public int side = 1;
+    [Space] [Header("Canon to Shoot")] 
+    [SerializeField] private Transform canon;
 
     [Space]
     [Header("VFX")]
@@ -42,6 +39,10 @@ public class PlayerMovement : MonoBehaviour
     public ParticleSystem slideParticle;
 
     private bool CanJumpUpdate = true;
+    private bool groundTouch;
+    private bool hasDashed;
+
+    public int side = 1;
     
     
     void Start()
@@ -58,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
         float xRaw = Input.GetAxisRaw("Horizontal");
         float yRaw = Input.GetAxisRaw("Vertical");
         Vector2 dir = new Vector2(x, y);
-        
+
         Walk(dir);
         
         if(CanJumpUpdate)
@@ -117,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
                 WallJump();
         }
         
-        if (Input.GetButtonDown("Fire1") && !hasDashed)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !hasDashed)
         {
             if(xRaw != 0 || yRaw != 0)
                 Dash(xRaw, yRaw);
@@ -140,10 +141,12 @@ public class PlayerMovement : MonoBehaviour
         if(x > 0)
         {
             side = 1;
+            canon.localPosition = new Vector3(0.5f, 0f, 0f);
         }
         if (x < 0)
         {
             side = -1;
+            canon.localPosition = new Vector3(-0.5f, 0f, 0f);
         }
     }
     
