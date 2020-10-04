@@ -59,6 +59,17 @@ public class PlayerMovement : MonoBehaviour
         float xRaw = Input.GetAxisRaw("Horizontal");
         float yRaw = Input.GetAxisRaw("Vertical");
         Vector2 dir = new Vector2(x, y);
+        
+        //Run
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            speed += 5f;
+        }
+        
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            speed -= 5f;
+        }
 
         Walk(dir);
         

@@ -14,6 +14,10 @@ public class RotationSquareMap : MonoBehaviour
     public Transform pivotDownL;
     [Space] public float timer = 0f;
     public bool canRotate = false;
+
+    [Header("Trigger Pivots")] 
+    [SerializeField] private BoxCollider2D leftPivot;
+    [SerializeField] private BoxCollider2D rightPivot;
     
     private bool leftTriggerActive = false;
     private bool rightTriggerActive = false;
@@ -55,7 +59,7 @@ public class RotationSquareMap : MonoBehaviour
                 float lerp = timer / duration;
                 //print(lerp);
                 currentParent.rotation = Quaternion.Lerp(currentParent.rotation, Quaternion.Euler(0f, 0f, rotationTo),
-                    lerp / 15f);
+                    lerp);
 
                 timer += Time.deltaTime;
 
@@ -89,91 +93,91 @@ public class RotationSquareMap : MonoBehaviour
         int rotation = Mathf.RoundToInt(rotationTo);
 
         //rotation = Mathf.Abs(rotation);
-                
-        print(rotation);
 
         BoxCollider2D box = currentParent.GetComponent<BoxCollider2D>();
                 
         if(rightTriggerActive)
         {
-            if (rotation == 0)
+            switch (rotation)
             {
-                box.offset = new Vector2(5, 0);
-                box.size = new Vector2(1.3f, 11.7f);
-            }
-            else if (rotation == 90)
-            {
-                box.offset = new Vector2(0, -5);
-                box.size = new Vector2(11.7f, 1.3f);
-            }
-            else if (rotation == -90)
-            {
-                box.offset = new Vector2(0, 5);
-                box.size = new Vector2(11.7f, 1.3f);
-            }
-            else if (rotation == 180)
-            {
-                box.offset = new Vector2(-5, 0);
-                box.size = new Vector2(1.3f, 11.7f);
-            }
-            else if (rotation == -180)
-            {
-                box.offset = new Vector2(-5, 0);
-                box.size = new Vector2(1.3f, 11.7f);
-            }
-            else if (rotation == 270)
-            {
-                box.offset = new Vector2(0, 5);
-                box.size = new Vector2(11.7f, 1.3f);
-            }
-            else if (rotation == 360)
-            {
-                box.offset = new Vector2(5, 0);
-                box.size = new Vector2(1.3f, 11.7f);
+                case 0:
+                    box.offset = new Vector2(5, 0);
+                    box.size = new Vector2(1.3f, 11.7f);
+                    break;
+                case 90:
+                    box.offset = new Vector2(0, -5);
+                    box.size = new Vector2(11.7f, 1.3f);
+                    break;
+                case -90:
+                    box.offset = new Vector2(0, 5);
+                    box.size = new Vector2(11.7f, 1.3f);
+                    break;
+                case 180:
+                    box.offset = new Vector2(-5, 0);
+                    box.size = new Vector2(1.3f, 11.7f);
+                    break;
+                case -180:
+                    box.offset = new Vector2(-5, 0);
+                    box.size = new Vector2(1.3f, 11.7f);
+                    break;
+                case 270:
+                    box.offset = new Vector2(0, 5);
+                    box.size = new Vector2(11.7f, 1.3f);
+                    break;
+                case -270:
+                    box.offset = new Vector2(0, -5);
+                    box.size = new Vector2(11.7f, 1.3f);
+                    break;
+                case 360:
+                    box.offset = new Vector2(5, 0);
+                    box.size = new Vector2(1.3f, 11.7f);
+                    break;
             }
 
             rightTriggerActive = false;
+            rightPivot.enabled = true;
         }
 
         if (leftTriggerActive)
         {
-            if (rotation == 0)
+            switch (rotation)
             {
-                box.offset = new Vector2(-5, 0);
-                box.size = new Vector2(1.3f, 11.7f);
-            }
-            else if (rotation == 90)
-            {
-                box.offset = new Vector2(0, 5);
-                box.size = new Vector2(11.7f, 1.3f);
-            }
-            else if (rotation == -90)
-            {
-                box.offset = new Vector2(0, -5);
-                box.size = new Vector2(11.7f, 1.3f);
-            }
-            else if (rotation == 270)
-            {
-                box.offset = new Vector2(0, -5);
-                box.size = new Vector2(11.7f, 1.3f);
-            }
-            else if (rotation == 180)
-            {
-                box.offset = new Vector2(5, 0);
-                box.size = new Vector2(1.3f, 11.7f);
-            }
-            else if (rotation == -180)
-            {
-                box.offset = new Vector2(5, 0);
-                box.size = new Vector2(1.3f, 11.7f);
-            }
-            else if (rotation == 360)
-            {
-                box.offset = new Vector2(-5, 0);
-                box.size = new Vector2(1.3f, 11.7f);
+                case 0:
+                    box.offset = new Vector2(-5, 0);
+                    box.size = new Vector2(1.3f, 11.7f);
+                    break;
+                case 90:
+                    box.offset = new Vector2(0, 5);
+                    box.size = new Vector2(11.7f, 1.3f);
+                    break;
+                case -90:
+                    box.offset = new Vector2(0, -5);
+                    box.size = new Vector2(11.7f, 1.3f);
+                    break;
+                case 270:
+                    box.offset = new Vector2(0, -5);
+                    box.size = new Vector2(11.7f, 1.3f);
+                    break;
+                case -270:
+                    box.offset = new Vector2(0, 5);
+                    box.size = new Vector2(11.7f, 1.3f);
+                    break;
+                case 180:
+                    box.offset = new Vector2(5, 0);
+                    box.size = new Vector2(1.3f, 11.7f);
+                    break;
+                case -180:
+                    box.offset = new Vector2(5, 0);
+                    box.size = new Vector2(1.3f, 11.7f);
+                    break;
+                case 360:
+                    box.offset = new Vector2(-5, 0);
+                    box.size = new Vector2(1.3f, 11.7f);
+                    break;
             }
 
             leftTriggerActive = false;
+            leftPivot.enabled = true;
         }
     }
 
@@ -188,6 +192,7 @@ public class RotationSquareMap : MonoBehaviour
         timer = 0f;
 
         leftTriggerActive = true;
+        leftPivot.enabled = false;
 
     }
 
@@ -201,6 +206,7 @@ public class RotationSquareMap : MonoBehaviour
         timer = 0f;
 
         rightTriggerActive = true;
+        rightPivot.enabled = false;
 
     }
 

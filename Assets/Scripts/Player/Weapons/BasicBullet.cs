@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,5 +15,12 @@ public class BasicBullet : MonoBehaviour
 
         rb2D.velocity = transform.right * speed;
     }
-    
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("Player") || other.CompareTag("GravityGun"))
+            return;
+        
+        gameObject.SetActive(false);
+    }
 }

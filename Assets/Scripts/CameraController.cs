@@ -5,6 +5,8 @@ public class CameraController : MonoBehaviour {
 
 	public GameObject player;        
 	public bool followY = false;
+	[SerializeField] private Transform walls;
+	[SerializeField] private Vector2 offsetWalls;
 
 	private Vector3 offset;           
 
@@ -13,7 +15,6 @@ public class CameraController : MonoBehaviour {
 		offset = transform.position - player.transform.position;
 	}
 
-// LateUpdate is called after Update each frame
 	void LateUpdate () 
 	{
 		if(followY)
@@ -22,7 +23,11 @@ public class CameraController : MonoBehaviour {
 		}
 		else
 		{
-			transform.position = new Vector3(player.transform.position.x, -12.53f, -10f); 
+			Vector3 newPos;
+			
+			newPos = new Vector3(player.transform.position.x, -11.4f, -10f);
+
+			transform.position = newPos;
 		}
 	}
 }
