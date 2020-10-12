@@ -16,11 +16,22 @@ public class BasicBullet : MonoBehaviour
         rb2D.velocity = transform.right * speed;
     }
 
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("Player") || other.CompareTag("GravityGun"))
-            return;
-        
-        gameObject.SetActive(false);
+        //if(other.CompareTag("Player") || other.CompareTag("GravityGun") || other.CompareTag("Interactuable"))
+            //return;
+        //if(other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            //gameObject.SetActive(false);
     }
+    
+
+    /*
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            gameObject.SetActive(false);
+    }
+    
+    */
 }

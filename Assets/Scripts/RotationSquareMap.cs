@@ -9,7 +9,11 @@ public class RotationSquareMap : MonoBehaviour
     public float duration = 1f;
     public float rotationTo;
 
-    [Space] [Header("Walls Transform")] public Transform walls;
+    [Space] [Header("Scriptable List Sides")] 
+    [SerializeField] private ObjectsToActivateSides scriptableList;
+    
+    [Space] 
+    [Header("Walls Transform")] public Transform walls;
     [Header("Pivots")] public Transform pivotDownR;
     public Transform pivotDownL;
     [Space] public float timer = 0f;
@@ -24,30 +28,13 @@ public class RotationSquareMap : MonoBehaviour
 
     private Transform currentParent;
 
+    private void Awake()
+    {
+        scriptableList.Restore();
+    }
+
     void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.Q) && canPressKey)
-        {
-            walls.parent = pivotDownL;
-            currentParent = pivotDownL;
-    
-            rotationTo = currentParent.rotation.eulerAngles.z + 90f;
-            canRotate = true;
-            timer = 0f;
-        }
-        
-        if (Input.GetKeyDown(KeyCode.E) && canPressKey)
-        {
-            walls.parent = pivotDownR;
-            currentParent = pivotDownR;
-    
-            rotationTo = currentParent.rotation.eulerAngles.z - 90f;
-            canRotate = true;
-            timer = 0f;
-        }
-        */
-        
         if (!canRotate)
             return;
         else
@@ -70,12 +57,8 @@ public class RotationSquareMap : MonoBehaviour
                 timer = 0f;
 
                 currentParent.rotation = Quaternion.Euler(0, 0, rotationTo);
-                
-                //print(currentParent.rotation.eulerAngles.z);
-                
-                ReubicateTriggers();
 
-                //canPressKey = true;
+                ReubicateTriggers();
 
                 walls.parent = transform;
 
@@ -83,16 +66,14 @@ public class RotationSquareMap : MonoBehaviour
 
                 pivotDownL.localPosition = new Vector3(wallsPos.x - 15f, wallsPos.y - 15f, 0f);
                 pivotDownR.localPosition = new Vector3(wallsPos.x + 15, wallsPos.y - 15f, 0f);
-
+                
             }
         }
     }
-
+    
     private void ReubicateTriggers()
     {
         int rotation = Mathf.RoundToInt(rotationTo);
-
-        //rotation = Mathf.Abs(rotation);
 
         BoxCollider2D box = currentParent.GetComponent<BoxCollider2D>();
                 
@@ -100,35 +81,35 @@ public class RotationSquareMap : MonoBehaviour
         {
             switch (rotation)
             {
-                case 0:
+                case 0:  //DOWN
                     box.offset = new Vector2(5, 0);
                     box.size = new Vector2(1.3f, 11.7f);
                     break;
-                case 90:
+                case 90:   //LEFT
                     box.offset = new Vector2(0, -5);
                     box.size = new Vector2(11.7f, 1.3f);
                     break;
-                case -90:
+                case -90:   //RIGHT
                     box.offset = new Vector2(0, 5);
                     box.size = new Vector2(11.7f, 1.3f);
                     break;
-                case 180:
+                case 180:    //UP
                     box.offset = new Vector2(-5, 0);
                     box.size = new Vector2(1.3f, 11.7f);
                     break;
-                case -180:
+                case -180:    //UP
                     box.offset = new Vector2(-5, 0);
                     box.size = new Vector2(1.3f, 11.7f);
                     break;
-                case 270:
+                case 270:   //LEFT
                     box.offset = new Vector2(0, 5);
                     box.size = new Vector2(11.7f, 1.3f);
                     break;
-                case -270:
+                case -270:    //RIGHT
                     box.offset = new Vector2(0, -5);
                     box.size = new Vector2(11.7f, 1.3f);
                     break;
-                case 360:
+                case 360:     //DOWN
                     box.offset = new Vector2(5, 0);
                     box.size = new Vector2(1.3f, 11.7f);
                     break;

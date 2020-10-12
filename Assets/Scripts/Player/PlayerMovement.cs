@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
 using Unity.Mathematics;
 
 public class PlayerMovement : MonoBehaviour
@@ -28,8 +30,15 @@ public class PlayerMovement : MonoBehaviour
     public bool wallSlide;
     public bool isDashing;
 
-    [Space] [Header("Canon to Shoot")] 
+    [Space] 
+    [Header("Canon to Shoot")] 
     [SerializeField] private Transform canon;
+    [Header("Sword Collider")] 
+    [SerializeField] private Transform sword;
+
+    [SerializeField] private float cooldownTimerSword = 0.5f;
+    [Header("Gravity Gun")] 
+    [SerializeField] private Transform gravityGun;
 
     [Space]
     [Header("VFX")]
@@ -42,14 +51,20 @@ public class PlayerMovement : MonoBehaviour
     private bool groundTouch;
     private bool hasDashed;
 
+    private bool isSlashing;
+
+    private Animator anim;
+
     public int side = 1;
+    public int upDown = 0;
     
     
     void Start()
     {
         col = GetComponent<Collision>();
         rb2D = GetComponent<Rigidbody2D>();
-        
+        anim = GetComponent<Animator>();
+
     }
     
     void Update()
@@ -70,6 +85,14 @@ public class PlayerMovement : MonoBehaviour
         {
             speed -= 5f;
         }
+        
+        if (Input.GetMouseButtonDown(1) && cooldownTimerSword <= 0f)
+        {
+            anim.SetTrigger("Attack");
+            cooldownTimerSword = 0.3f;
+        }
+
+        cooldownTimerSword -= Time.deltaTime;
 
         Walk(dir);
         
@@ -91,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
         if (col.onGround && !isDashing)
         {
             wallJumped = false;
-            CanJumpUpdate = false;
+            //CanJumpUpdate = false;
         }
         
         if (wallGrab && !isDashing)
@@ -153,11 +176,42 @@ public class PlayerMovement : MonoBehaviour
         {
             side = 1;
             canon.localPosition = new Vector3(0.5f, 0f, 0f);
+            
+            gravityGun.localRotation = Quaternion.identity;
+            
+            if (!isSlashing)
+            {
+                sword.localPosition = new Vector3(0.8f, 0.61f, 0f);
+                sword.localRotation = Quaternion.identity;
+            }
         }
         if (x < 0)
         {
             side = -1;
             canon.localPosition = new Vector3(-0.5f, 0f, 0f);
+            
+            gravityGun.localRotation = Quaternion.Euler(0f, 180f, 0f);
+            
+            if(!isSlashing)
+            {
+                sword.localPosition = new Vector3(-0.8f, 0.61f, 0f);
+                sword.localRotation = Quaternion.Euler(0f, 180f, 0f);
+            }
+        }
+
+        if (y > 0)
+        {
+            upDown = 1;
+            sword.localPosition = new Vector3(0f, 1f, 0f);
+            sword.localRotation = Quaternion.Euler(0f, 0f, 90f);
+        }
+        else if (y < 0 && !isSlashing)
+        {
+            upDown = -1;
+        }
+        else
+        {
+            upDown = 0;
         }
     }
     
@@ -292,4 +346,33 @@ public class PlayerMovement : MonoBehaviour
             rb2D.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
     }
+
+    public void BeginSlash()
+    {
+        isSlashing = true;
+    }
+
+    public void EndSlash()
+    {
+        isSlashing = false;
+    }
+
+    /*
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            if(side == 1)
+            {
+                Vector2 impulseDir = new Vector2(-1f, .4f);
+                rb2D.AddForce(impulseDir * 2500, ForceMode2D.Force);
+            }
+            else
+            {
+                Vector2 impulseDir = new Vector2(1f, .4f);
+                rb2D.AddForce(impulseDir * 2500, ForceMode2D.Force);
+            }
+        }
+    }
+    */
 }

@@ -5,13 +5,37 @@ using UnityEngine;
 
 public class FlamableObj : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem fireParticle;
+    public ParticleSystem fireParticle;
+    [SerializeField] private bool canDetectBullets = true;
+
+    private bool isBurning = false;
+
+    private void Update()
+    {
+	    if (isBurning && !fireParticle.isPlaying)
+	    {
+		    gameObject.SetActive(false);
+	    }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-	    if (other.CompareTag("FireBullet") && !fireParticle.isPlaying)
+	    if (canDetectBullets)
 	    {
-		    fireParticle.Play();
+		    if(other.CompareTag("FireBullet") && !fireParticle.isPlaying)
+				fireParticle.Play();
+	    }
+
+	    else
+	    {
+		    FlamableObj flamable = other.GetComponent<FlamableObj>();
+		    
+		    if(flamable != null && flamable.fireParticle.isPlaying)
+		    {
+			    fireParticle.Play();
+			    isBurning = true;
+		    }
+		    
 	    }
     }
 }

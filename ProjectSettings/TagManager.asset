@@ -7,6 +7,8 @@ TagManager:
   - FireBullet
   - Enemy
   - GravityGun
+  - PlayerSword
+  - Interactuable
   layers:
   - Default
   - TransparentFX
