@@ -14,8 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   downSide:
   - {fileID: 0}
-  - {fileID: 0}
   rightSide: []
   upSide: []
   leftSide: []
-  test: 0

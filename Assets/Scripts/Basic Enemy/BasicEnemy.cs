@@ -41,6 +41,7 @@ public class BasicEnemy : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.transform.position, groundCheckRadius, groundLayer);
 
+        
         if (!isGrounded && facingRight)
         {
             Flip();
@@ -49,6 +50,7 @@ public class BasicEnemy : MonoBehaviour
         {
             Flip();
         }
+        
 
         if (recoveryTimer > 0)
         {
@@ -69,6 +71,11 @@ public class BasicEnemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
         if(other.gameObject.CompareTag("Player") && takeDamage == false)
         {
             takeDamage = true;
@@ -82,10 +89,7 @@ public class BasicEnemy : MonoBehaviour
             
             //Flip();
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
+        
         if (other.CompareTag("PlayerSword"))
         {
             print("Collide with Sword");

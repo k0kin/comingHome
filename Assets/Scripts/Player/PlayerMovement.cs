@@ -176,6 +176,7 @@ public class PlayerMovement : MonoBehaviour
         {
             side = 1;
             canon.localPosition = new Vector3(0.5f, 0f, 0f);
+            canon.localRotation = Quaternion.identity;
             
             gravityGun.localRotation = Quaternion.identity;
             
@@ -189,6 +190,7 @@ public class PlayerMovement : MonoBehaviour
         {
             side = -1;
             canon.localPosition = new Vector3(-0.5f, 0f, 0f);
+            canon.localRotation = Quaternion.Euler(0f, 180f, 0f);
             
             gravityGun.localRotation = Quaternion.Euler(0f, 180f, 0f);
             

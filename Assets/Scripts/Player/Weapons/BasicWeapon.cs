@@ -14,7 +14,7 @@ public class BasicWeapon : MonoBehaviour
             Shoot();
         }
         
-        LookMouse();
+        //LookMouse();
     }
 
     private void Shoot()
