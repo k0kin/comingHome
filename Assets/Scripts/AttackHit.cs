@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class AttackHit : MonoBehaviour {
 
-	[SerializeField] enum AttacksWhat {EnemyBase, NewPlayer};
+	[SerializeField] enum AttacksWhat {EnemyBase, Player, EyeEnemy};
 	[SerializeField] AttacksWhat attacksWhat;
 	private int launchDirection = 1;
 	[SerializeField] private GameObject parent;
 
-	// Use this for initialization
 	void Start () {
 
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		
 	}

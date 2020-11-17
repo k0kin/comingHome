@@ -6,11 +6,15 @@ public class BasicWeapon : MonoBehaviour
 {
     public Transform canon;
     public GameObject bulletPrefab;
+
+    public float fireRate = 15f;
+    private float nextTimetoFire = 0f;
     
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetAxis("Fire1") > 0.5f && Time.time >= nextTimetoFire)
         {
+            nextTimetoFire = Time.time + 1f / fireRate;
             Shoot();
         }
         

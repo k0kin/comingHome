@@ -16,7 +16,7 @@ public class GravityBullet : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q) || Input.GetAxis("GravityGun") >= 0.5)
         {
             foreach (Rigidbody2D rb in objsToInteract)
                 rb.isKinematic = false;
@@ -24,7 +24,7 @@ public class GravityBullet : MonoBehaviour
             effector.forceMagnitude = -20f;
             effector.enabled = true;
         }
-        else if (Input.GetKey(KeyCode.E))
+        else if (Input.GetKey(KeyCode.E) || Input.GetAxis("GravityGun") <= -0.5)
         {
             foreach (Rigidbody2D rb in objsToInteract)
                 rb.isKinematic = false;

@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
             speed -= 5f;
         }
         
-        if (Input.GetMouseButtonDown(1) && cooldownTimerSword <= 0f)
+        if ((Input.GetMouseButtonDown(1) || Input.GetButtonDown("Sword")) && cooldownTimerSword <= 0f)
         {
             anim.SetTrigger("Attack");
             cooldownTimerSword = 0.3f;
@@ -99,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
         if(CanJumpUpdate)
             JumpUpdate();
         
-        if (col.onWall && Input.GetButton("Fire3") && canMove)
+        if (col.onWall && (Input.GetButtonDown("Fire3")) && canMove)
         {
             wallGrab = true;
             wallSlide = false;
@@ -152,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
                 WallJump();
         }
         
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !hasDashed)
+        if (Input.GetButtonDown("Fire3") && !hasDashed)
         {
             if(xRaw != 0 || yRaw != 0)
                 Dash(xRaw, yRaw);
