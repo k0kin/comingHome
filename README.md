@@ -6,9 +6,11 @@ CONTROLES
 
 A - MOVE LEFT
 S - MOVE RIGHT
-W - LOOK UP
 SPACE - JUMP - A Button
 LEFT SHIFT - DASH  - Y Button
+1 - First Weapon
+2 - Second Weapon
+3 - Third Weapon
 
 --ARMA GRAVITACIONAL--
 
